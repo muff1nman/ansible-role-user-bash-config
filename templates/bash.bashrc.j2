@@ -1,0 +1,90 @@
+#
+# /etc/bash.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# Should be sourced for rhel systems
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+GPG_TTY=$(tty)
+export GPG_TTY
+
+PS1='\[\033[36;1m\]\$\[\033[39m\] '
+PS2='\[\033[36;1m\]>\[\033[39m\] '
+PS3='\[\033[36;1m\]>\[\033[39m\] '
+PS4='\[\033[36;1m\]+\[\033[39m\] '
+
+case ${TERM} in
+  xterm*|rxvt*|Eterm|aterm|kterm|gnome*)
+    PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"'
+
+    ;;
+  screen)
+    PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033_%s@%s:%s\033\\" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"'
+    ;;
+esac
+
+function prompt_command {
+	# TODO
+	# - error handling on no color
+	# - output status of previous command
+	# - current git branch
+	# - color hostnames differently
+	# - news output at first command
+	printf "\033[01;90m%s@%s\033[00m:%s\n" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
+}
+
+export PROMPT_COMMAND=prompt_command
+
+trap 'echo -ne "\e[0m"' DEBUG
+
+[ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
+
+function cdl () {
+    cd $1
+    ls
+}
+
+# misspell help
+shopt -s cdspell
+
+# synced aliases
+if [ -f /etc/bash.aliases ]; then
+	. /etc/bash.aliases
+fi
+
+if [ -f "$HOME/.bash.aliases" ]; then
+	. "$HOME/.bash.aliases"
+fi
+
+if [ -f "$HOME/.bashrc_local" ]; then
+	. "$HOME/.bashrc_local"
+fi
+
+if [ -f /usr/lib/z.sh ]; then
+	. /usr/lib/z.sh
+fi
+
+if [ -f ${HOME}/.local/z/z.sh ]; then
+	. ${HOME}/.local/z/z.sh
+fi
+
+if [ -f "${HOME}/bin/oc_bash.sh" ]; then
+	. "${HOME}/bin/oc_bash.sh"
+fi
+
+export GOPATH="${HOME}/Source/go"
+export PATH="${GOPATH}/bin:${PATH}"
+
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+export GPG_TTY=`tty`
+
+export EDITOR=vim
+
+{% if additional_bashrc is defined %}
+{{ additional_bashrc }}
+{% endif %}

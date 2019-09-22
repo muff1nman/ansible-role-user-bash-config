@@ -1,0 +1,25 @@
+---
+- name: Setting up User Variables
+  discover_user_vars:
+    user: "{{ ansible_env.USER }}"
+  check_mode: no
+  register: desktop_user_vars
+- name: Configure bashrc
+  template:
+    src: bash.bashrc.j2
+    dest: "{{ desktop_user_vars.dir }}/.bashrc"
+- name: Configure bash_profile
+  copy:
+    src: bash_profile
+    dest: "{{ desktop_user_vars.dir }}/.bash_profile"
+- name: Configure aliases
+  template:
+    src: bash.aliases.j2
+    dest: "{{ desktop_user_vars.dir }}/.bash.aliases"
+- name: Install z tool to local home directory
+  git:
+    clone: yes
+    repo: "https://github.com/rupa/z.git"
+    update: yes
+    dest: "{{ desktop_user_vars.dir }}/.local/z"
+  when: limited_internet is not defined
