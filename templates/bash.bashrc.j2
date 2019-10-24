@@ -77,6 +77,14 @@ if [ -f "${HOME}/bin/oc_bash.sh" ]; then
 	. "${HOME}/bin/oc_bash.sh"
 fi
 
+if [ -f "${HOME}/bin/kube_bash.sh" ]; then
+	. "${HOME}/bin/kube_bash.sh"
+fi
+
+if [ -f "${HOME}/bin/minikube_bash.sh" ]; then
+	. "${HOME}/bin/minikube_bash.sh"
+fi
+
 export GOPATH="${HOME}/Source/go"
 export PATH="${GOPATH}/bin:${PATH}"
 
