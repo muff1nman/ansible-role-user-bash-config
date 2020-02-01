@@ -45,3 +45,6 @@ alias sr='find . -type f -print0 | xargs -0 perl -pi -w -e '
 
 alias dup='nohup terminology . 2>&1 >/dev/null &'
 alias copy='xclip -selection c'
+{% if additional_bash_alias %}
+{{ additional_bash_alias }}
+{% endif %}
