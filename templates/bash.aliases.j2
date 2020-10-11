@@ -49,6 +49,6 @@ alias copy='xclip -selection c'
 alias k=kubectl
 complete -F __start_kubectl k
 
-{% if additional_bash_alias %}
+{% if additional_bash_alias is defined %}
 {{ additional_bash_alias }}
 {% endif %}
