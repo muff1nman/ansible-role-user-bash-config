@@ -67,7 +67,11 @@ shopt -s histappend
 # Force prompt to write history after every command.
 # http://superuser.com/questions/20900/bash-history-loss
 PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+BIN_DIR="${HOME}/.local/bin"
 
+if [ -f "${BIN_DIR}/complete_alias" ]; then
+	. "${BIN_DIR}/complete_alias"
+fi
 
 # synced aliases
 if [ -f /etc/bash.aliases ]; then
@@ -90,28 +94,7 @@ if [ -f ${HOME}/.local/z/z.sh ]; then
 	. ${HOME}/.local/z/z.sh
 fi
 
-if [ -f "${HOME}/bin/oc_bash.sh" ]; then
-	. "${HOME}/bin/oc_bash.sh"
-fi
-
-if [ -f "${HOME}/bin/kube_bash.sh" ]; then
-	. "${HOME}/bin/kube_bash.sh"
-fi
-
-if [ -f "${HOME}/bin/minikube_bash.sh" ]; then
-	. "${HOME}/bin/minikube_bash.sh"
-fi
-
-if [ -f "${HOME}/bin/kns.bash" ]; then
-	. "${HOME}/bin/kns.bash"
-fi
-
-if [ -f "${HOME}/bin/kctx.bash" ]; then
-	. "${HOME}/bin/kctx.bash"
-fi
-
-export GOPATH="${HOME}/Source/go"
-export PATH="${GOPATH}/bin:${PATH}"
+export PATH="${PATH}:${BIN_DIR}"
 
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 export GPG_TTY=`tty`

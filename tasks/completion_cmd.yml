@@ -1,0 +1,9 @@
+- name: Get bash completion command output
+  command: "{{ item.value.command }}"
+  register: "bash_cmd"
+  changed_when: False
+- name: Save bash compeletion script
+  copy:
+    content: "{{ bash_cmd.stdout }}"
+    dest: "{{ desktop_user_vars.dir }}/.local/bin/{{ item.key }}"
+    mode: "0555"

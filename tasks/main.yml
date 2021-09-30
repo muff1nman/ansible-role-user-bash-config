@@ -18,3 +18,17 @@
     update: yes
     dest: "{{ desktop_user_vars.dir }}/.local/z"
   when: limited_internet is not defined
+- name: Create bin directory
+  file:
+    state: directory
+    path: "{{ desktop_user_vars.dir }}/.local/bin"
+- name: Get downloadable bash bins
+  get_url:
+    url: "{{ item.value.url }}"
+    checksum: "{{ item.value.checksum }}"
+    dest: "{{ desktop_user_vars.dir }}/.local/bin/{{ item.key }}"
+    mode: "0555"
+  loop: "{{ bash_remote_bins | dict2items }}"
+- name: Setup bash completion commands
+  include_tasks: completion_cmd.yml
+  loop: "{{ bash_generated_bins | dict2items }}"
