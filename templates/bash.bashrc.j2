@@ -94,7 +94,8 @@ if [ -f ${HOME}/.local/z/z.sh ]; then
 	. ${HOME}/.local/z/z.sh
 fi
 
-export PATH="${PATH}:${BIN_DIR}"
+export GOPATH="${HOME}/Source/go"
+export PATH="${PATH}:${BIN_DIR}:${GOPATH}/bin"
 
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 export GPG_TTY=`tty`
