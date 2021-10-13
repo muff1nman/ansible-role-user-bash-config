@@ -29,6 +29,12 @@
     dest: "{{ desktop_user_vars.dir }}/.local/bin/{{ item.key }}"
     mode: "0555"
   loop: "{{ bash_remote_bins | dict2items }}"
+- name: Copy bash scripts
+  copy:
+    content: "{{ item.value }}"
+    dest: "{{ desktop_user_vars.dir }}/.local/bin/{{ item.key }}"
+    mode: "0555"
+  loop: "{{ bash_inline_bins | dict2items }}"
 - name: Setup bash completion commands
   include_tasks: completion_cmd.yml
   loop: "{{ bash_generated_bins | dict2items }}"

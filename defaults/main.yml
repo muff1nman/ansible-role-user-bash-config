@@ -3,3 +3,4 @@ bash_remote_bins:
     url: https://raw.githubusercontent.com/cykerway/complete-alias/46d9a299d3c32522ef0ab4ae706d75c8d86c52d3/complete_alias
     checksum: "sha256:925a36b56094ca0e6ce86aebc4f7524838c5ea9cfa1359417a208bbb703fe1c7"
 bash_generated_bins: {}
+bash_inline_bins: {}
