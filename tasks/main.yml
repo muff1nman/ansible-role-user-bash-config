@@ -35,6 +35,14 @@
     dest: "{{ desktop_user_vars.dir }}/.local/bin/{{ item.key }}"
     mode: "0555"
   loop: "{{ bash_inline_bins | dict2items }}"
+- name: Link bash scripts
+  file:
+    state: link
+    src: "{{ desktop_user_vars.dir ~ '/' ~ item.link_relative_to_home if item.link_relative_to_home is defined else item.link }}"
+    path: "{{ desktop_user_vars.dir }}/.local/bin/{{ item.name }}"
+    mode: "0555"
+  loop: "{{ bash_symlinks }}"
+  when: "bash_symlinks is defined"
 - name: Setup bash completion commands
   include_tasks: completion_cmd.yml
   loop: "{{ bash_generated_bins | dict2items }}"
