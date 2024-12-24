@@ -11,13 +11,6 @@
   template:
     src: bash.aliases.j2
     dest: "{{ desktop_user_vars.dir }}/.bash.aliases"
-- name: Install z tool to local home directory
-  git:
-    clone: yes
-    repo: "https://github.com/rupa/z.git"
-    update: yes
-    dest: "{{ desktop_user_vars.dir }}/.local/z"
-  when: limited_internet is not defined
 - name: Create bin directory
   file:
     state: directory
