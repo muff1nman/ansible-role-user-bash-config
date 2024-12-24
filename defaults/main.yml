@@ -4,3 +4,4 @@ bash_remote_bins:
     checksum: "sha256:925a36b56094ca0e6ce86aebc4f7524838c5ea9cfa1359417a208bbb703fe1c7"
 bash_generated_bins: {}
 bash_inline_bins: {}
+bash_symlinks: []
