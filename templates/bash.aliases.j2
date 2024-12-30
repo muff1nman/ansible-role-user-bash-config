@@ -38,16 +38,8 @@ alias sl='ls'
 
 alias g='grep -rEIi'
 
-alias e='exit'
-
 alias sr='find . -type f -print0 | xargs -0 perl -pi -w -e ' 
 #'s/Ip(?!v4)/Ipv4/g;'  # {}
-
-alias dup='nohup terminology . 2>&1 >/dev/null &'
-alias copy='xclip -selection c'
-
-alias k=kubectl
-complete -F __start_kubectl k
 
 alias ns="kubie ns"
 alias ctx="kubie ctx"
